@@ -3,9 +3,11 @@ package ch.szclsb.test.jdbi.app.apis.outbound.test;
 import ch.szclsb.test.jdbi.app.business.service.TestBusinessService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/test")
+@RestController
+@RequestMapping("/test")
 public class TestEndpoint {
     private final TestBusinessService testBusinessService;
 
