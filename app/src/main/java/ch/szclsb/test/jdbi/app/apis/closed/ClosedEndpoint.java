@@ -1,4 +1,4 @@
-package ch.szclsb.test.jdbi.app.apis.outbound.test;
+package ch.szclsb.test.jdbi.app.apis.closed;
 
 import ch.szclsb.test.jdbi.app.business.service.TestBusinessService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/test")
-public class TestEndpoint {
+public class ClosedEndpoint {
     private final TestBusinessService testBusinessService;
 
-    public TestEndpoint(TestBusinessService testBusinessService) {
+    public ClosedEndpoint(TestBusinessService testBusinessService) {
         this.testBusinessService = testBusinessService;
     }
 

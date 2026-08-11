@@ -1,4 +1,4 @@
-package ch.szclsb.test.jdbi.app.apis.outbound.test;
+package ch.szclsb.test.jdbi.app.apis.open;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
