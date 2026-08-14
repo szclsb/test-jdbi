@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1000" author="szclsb" context="default">
+        <tagDatabase tag="1.0"/>
+    </changeSet>
+
+    <changeSet id="1001" author="szclsb" context="default">
+        <comment>create author table</comment>
+
+        <createSequence sequenceName="seq_author" startValue="1000"/>
+        <createTable tableName="author">
+            <column name="id" type="bigint" defaultValueSequenceNext="seq_author">
+                <constraints primaryKey="true" primaryKeyName="pk_author"/>
+            </column>
+            <column name="version" type="int"/>
+            <column name="created_at" type="datetime"/>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="modified_at" type="datetime"/>
+            <column name="modified_by" type="varchar(255)"/>
+
+            <column name="first_name" type="varchar(255)">
+            </column>
+            <column name="last_name" type="varchar(255)">
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="author" cascadeConstraints="true"/>
+            <dropSequence sequenceName="seq_author"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="1002" author="szclsb" context="default">
+        <comment>create author table</comment>
+
+        <createSequence sequenceName="seq_book" startValue="1000"/>
+        <createTable tableName="book">
+            <column name="id" type="bigint" defaultValueSequenceNext="seq_book">
+                <constraints primaryKey="true" primaryKeyName="pk_book"/>
+            </column>
+            <column name="version" type="int"/>
+            <column name="created_at" type="datetime"/>
+            <column name="created_by" type="varchar(255)"/>
+            <column name="modified_at" type="datetime"/>
+            <column name="modified_by" type="varchar(255)"/>
+
+            <column name="title" type="varchar(255)">
+            </column>
+            <column name="summary" type="text">
+            </column>
+            <column name="author_id" type="bigint">
+                <constraints nullable="true"
+                             foreignKeyName="fk_book__author_id"
+                             referencedTableName="author"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="book" cascadeConstraints="true"/>
+            <dropSequence sequenceName="seq_book"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
