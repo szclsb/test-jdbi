@@ -24,5 +24,5 @@ public interface AuthorRepository {
     WHERE id = :id
     """)
     @RegisterConstructorMapper(Author.class)
-    Optional<Author> findById(@Bind("id") long id);
+    Optional<Author> findById(long id);
 }
