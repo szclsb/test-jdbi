@@ -23,6 +23,6 @@ public interface AuthorRepository {
     FROM store.author
     WHERE id = :id
     """)
-    @RegisterConstructorMapper(Author.class)
+    @RegisterBeanMapper(Author.class)
     Optional<Author> findById(long id);
 }
