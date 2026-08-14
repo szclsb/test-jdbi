@@ -25,6 +25,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>ch.szclsb.test</groupId>
+            <artifactId>jdbi-model</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>

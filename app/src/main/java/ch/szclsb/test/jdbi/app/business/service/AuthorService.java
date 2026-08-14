@@ -1,6 +1,6 @@
 package ch.szclsb.test.jdbi.app.business.service;
 
-import ch.szclsb.test.jdbi.app.business.data.Author;
+import ch.szclsb.test.jdbi.model.store.Author;
 import ch.szclsb.test.jdbi.app.business.repo.AuthorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

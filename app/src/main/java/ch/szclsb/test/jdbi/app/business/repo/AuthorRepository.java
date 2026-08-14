@@ -1,9 +1,9 @@
 package ch.szclsb.test.jdbi.app.business.repo;
 
-import ch.szclsb.test.jdbi.app.business.data.Author;
+import ch.szclsb.test.jdbi.model.store.Author;
 import org.jdbi.v3.spring.JdbiRepository;
+import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.config.RegisterConstructorMapper;
-import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface AuthorRepository {
     SELECT *
     FROM store.author
     """)
-    @RegisterConstructorMapper(Author.class)
+    @RegisterBeanMapper(Author.class)
     List<Author> findAll();
 
     @SqlQuery("""

@@ -1,6 +1,6 @@
 package ch.szclsb.test.jdbi.app.apis.closed;
 
-import ch.szclsb.test.jdbi.app.business.data.Author;
+import ch.szclsb.test.jdbi.model.store.Author;
 import ch.szclsb.test.jdbi.app.business.service.AuthorService;
 import ch.szclsb.test.jdbi.app.exception.ApiException;
 import org.springframework.web.bind.annotation.GetMapping;
