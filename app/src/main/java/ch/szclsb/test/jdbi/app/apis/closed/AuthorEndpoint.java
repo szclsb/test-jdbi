@@ -1,7 +1,7 @@
 package ch.szclsb.test.jdbi.app.apis.closed;
 
 import ch.szclsb.test.jdbi.model.store.Author;
-import ch.szclsb.test.jdbi.app.business.service.AuthorService;
+import ch.szclsb.test.jdbi.app.business.service.AuthorBusinessService;
 import ch.szclsb.test.jdbi.app.exception.ApiException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +13,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/store/v1/author")
 public class AuthorEndpoint {
-    private final AuthorService authorService;
+    private final AuthorBusinessService authorService;
 
-    public AuthorEndpoint(AuthorService authorService) {
+    public AuthorEndpoint(AuthorBusinessService authorService) {
         this.authorService = authorService;
     }
 

@@ -11,21 +11,25 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class AuthorService {
+public class AuthorBusinessService implements BusinessService<Author> {
     private final AuthorRepository authorRepository;
 
-    public AuthorService(AuthorRepository authorRepository) {
+    public AuthorBusinessService(final AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<Author> findAll() {
         return authorRepository.findAll();
     }
 
+    @Override
     @Transactional(readOnly = true)
-    public Optional<Author> findById(long id) {
+    public Optional<Author> findById(final Long id) {
         return authorRepository.findById(id);
     }
+
+
 
 }

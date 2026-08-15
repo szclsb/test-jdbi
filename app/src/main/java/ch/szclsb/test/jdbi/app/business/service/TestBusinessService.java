@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TestBusinessService {
 
-    public String getTestMessage(String name) {
+    public String getTestMessage(final String name) {
         return "Server: hello " + name;
     }
 }
