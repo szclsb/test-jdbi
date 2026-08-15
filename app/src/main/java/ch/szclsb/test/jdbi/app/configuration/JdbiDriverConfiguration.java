@@ -24,7 +24,7 @@ public class JdbiDriverConfiguration {
     public Jdbi jdbi(DataSource dataSource) {
         var cf = new SpringConnectionFactory(dataSource);
         final var jdbi = Jdbi.create(cf);
-        jdbi.installPlugin(new SqlObjectPlugin());
+        //jdbi.installPlugin(new SqlObjectPlugin());  // enable if @JdbiRepository are used
         jdbi.installPlugin(new PostgresPlugin());
 
         var provider = new ClassPathScanningCandidateComponentProvider(false);
@@ -38,9 +38,6 @@ public class JdbiDriverConfiguration {
                 throw new IllegalStateException("Could not load class", e);
             }
         });
-
-        jdbi.registerRowMapper(BeanMapper.factory(Author.class));
-        jdbi.registerRowMapper(BeanMapper.factory(Book.class));
 
         return jdbi;
     }

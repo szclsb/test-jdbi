@@ -1,25 +1,35 @@
 package ch.szclsb.test.jdbi.app.business.repo;
 
 import ch.szclsb.test.jdbi.model.store.Author;
-import org.jdbi.v3.spring.JdbiRepository;
-import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
-import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.core.Jdbi;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
-@JdbiRepository
-public interface AuthorRepository {
-    @SqlQuery("""
-    SELECT *
-    FROM store.author
-    """)
-    List<Author> findAll();
+@Component
+public class AuthorRepository extends AbstractRepository<Author, Long> {
+    public AuthorRepository(Jdbi jdbi) {
+        super(jdbi);
+    }
 
-    @SqlQuery("""
-    SELECT *
-    FROM store.author
-    WHERE id = :id
-    """)
-    Optional<Author> findById(final Long id);
+    public List<Author> findAll() {
+        return useHandle(handle -> handle.createQuery("""
+                        SELECT *
+                        FROM store.author
+                        """)
+                .mapTo(Author.class)
+                .collectIntoList());
+    }
+
+    public Optional<Author> findById(final Long id) {
+        return useHandle(handle -> handle.createQuery("""
+                        SELECT *
+                        FROM store.author
+                        WHERE id = :id
+                        """)
+                .bind("id", id)
+                .mapTo(Author.class)
+                .findOne());
+    }
 }
