@@ -10,57 +10,32 @@ import org.jdbi.v3.core.result.RowView;
 import org.jdbi.v3.core.statement.Query;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @Component
 public class BookRepository extends AbstractEntityRepository<Book, Long> {
-    public BookRepository(Jdbi jdbi) {
-        super(jdbi, Book.class);
-    }
+    private final List<String> bookPrefixColumnNames;
+    private final List<String> authorPrefixColumnNames;
 
-    @Override
-    protected Query selectAll(Handle handle) {
-        return handle.createQuery("""
-                SELECT *
-                FROM store.book
-                """);
-    }
-
-    @Override
-    protected Query selectById(Handle handle, Long id) {
-        return handle.createQuery("""
-                        SELECT *
-                        FROM store.book
-                        WHERE id = :id
-                        """)
-                .bind("id", id);
-
+    public BookRepository(Jdbi jdbi, EntityMetadataService entityMetadataService) {
+        super(jdbi, entityMetadataService, Book.class);
+        this.bookPrefixColumnNames = entityMetadataService.getColumnNames(Book.class, "b");
+        this.authorPrefixColumnNames = entityMetadataService.getColumnNames(Author.class, "a");
     }
 
     public Optional<Book> findByIdWithAuthor(final Long id) {
         return useHandle(handle -> handle.createQuery("""
                         SELECT
-                                b.id AS b_id,
-                                b.version AS b_version,
-                                b.created_at AS b_created_at,
-                                b.created_by AS b_created_by,
-                                b.modified_at AS b_modified_at,
-                                b.modified_by AS b_modified_by,
-                                b.title AS b_title,
-                                b.summary AS b_summary,
-                                a.id AS a_id,
-                                a.version AS a_version,
-                                a.created_at AS a_created_at,
-                                a.created_by AS a_created_by,
-                                a.modified_at AS a_modified_at,
-                                a.modified_by AS a_modified_by,
-                                a.first_name AS a_first_name,
-                                a.last_name AS a_last_name
+                                <book_columns>,
+                                <author_columns>
                         FROM store.book b
                         JOIN store.author a ON b.author_id = a.id
                         WHERE b.id = :id
                         """)
+                .defineList("book_columns", bookPrefixColumnNames)
+                .defineList("author_columns", authorPrefixColumnNames)
                 .bind("id", id)
                 .registerRowMapper(BeanMapper.factory(Book.class, "b"))
                 .registerRowMapper(BeanMapper.factory(Author.class, "a"))
@@ -68,6 +43,7 @@ public class BookRepository extends AbstractEntityRepository<Book, Long> {
                 .findFirst());
     }
 
+    // todo simplify row reducer
     static class BookAuthorReducer implements LinkedHashMapRowReducer<Long, Book> {
         @Override
         public void accumulate(Map<Long, Book> map, RowView rowView) {

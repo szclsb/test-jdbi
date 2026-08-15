@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@EntityBean
+@EntityBean(schemaName = "store", tableName = "author")
 public class Author extends AbstractEntity<Long> {
     private String firstName;
     private String lastName;
