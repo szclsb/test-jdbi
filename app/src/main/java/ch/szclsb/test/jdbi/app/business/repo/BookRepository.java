@@ -2,40 +2,40 @@ package ch.szclsb.test.jdbi.app.business.repo;
 
 import ch.szclsb.test.jdbi.model.store.Author;
 import ch.szclsb.test.jdbi.model.store.Book;
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.reflect.BeanMapper;
 import org.jdbi.v3.core.result.LinkedHashMapRowReducer;
 import org.jdbi.v3.core.result.RowView;
+import org.jdbi.v3.core.statement.Query;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @Component
-public class BookRepository extends AbstractRepository<Book, Long> {
+public class BookRepository extends AbstractEntityRepository<Book, Long> {
     public BookRepository(Jdbi jdbi) {
-        super(jdbi);
+        super(jdbi, Book.class);
     }
 
-    public List<Book> findAll() {
-        return useHandle(handle -> handle.createQuery("""
-                        SELECT *
-                        FROM store.book
-                        """)
-                .mapTo(Book.class)
-                .collectIntoList());
+    @Override
+    protected Query selectAll(Handle handle) {
+        return handle.createQuery("""
+                SELECT *
+                FROM store.book
+                """);
     }
 
-    public Optional<Book> findById(final Long id) {
-        return useHandle(handle -> handle.createQuery("""
+    @Override
+    protected Query selectById(Handle handle, Long id) {
+        return handle.createQuery("""
                         SELECT *
                         FROM store.book
                         WHERE id = :id
                         """)
-                .bind("id", id)
-                .mapTo(Book.class)
-                .findOne());
+                .bind("id", id);
+
     }
 
     public Optional<Book> findByIdWithAuthor(final Long id) {
