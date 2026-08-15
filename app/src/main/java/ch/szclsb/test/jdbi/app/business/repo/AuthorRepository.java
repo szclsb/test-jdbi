@@ -14,7 +14,6 @@ public interface AuthorRepository {
     SELECT *
     FROM store.author
     """)
-    @RegisterBeanMapper(Author.class)
     List<Author> findAll();
 
     @SqlQuery("""
@@ -22,6 +21,5 @@ public interface AuthorRepository {
     FROM store.author
     WHERE id = :id
     """)
-    @RegisterBeanMapper(Author.class)
     Optional<Author> findById(final Long id);
 }

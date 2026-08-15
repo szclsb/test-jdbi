@@ -14,7 +14,6 @@ public interface BookRepository {
     SELECT *
     FROM store.book
     """)
-    @RegisterBeanMapper(Book.class)
     List<Book> findAll();
 
     @SqlQuery("""
@@ -22,6 +21,5 @@ public interface BookRepository {
     FROM store.book
     WHERE id = :id
     """)
-    @RegisterBeanMapper(Book.class)
     Optional<Book> findById(final Long id);
 }
