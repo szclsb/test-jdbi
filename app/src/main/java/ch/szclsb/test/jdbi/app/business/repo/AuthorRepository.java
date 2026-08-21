@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AuthorRepository extends AbstractEntityRepository<Author, Long> {
-    public AuthorRepository(Jdbi jdbi, EntityMetadataService entityMetadataService) {
-        super(jdbi, entityMetadataService, Author.class);
+    public AuthorRepository(Jdbi jdbi) {
+        super(jdbi, Author.class);
     }
 }

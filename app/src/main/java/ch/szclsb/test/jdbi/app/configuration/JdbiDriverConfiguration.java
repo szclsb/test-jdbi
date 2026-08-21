@@ -26,19 +26,6 @@ public class JdbiDriverConfiguration {
         final var jdbi = Jdbi.create(cf);
         //jdbi.installPlugin(new SqlObjectPlugin());  // enable if @JdbiRepository are used
         jdbi.installPlugin(new PostgresPlugin());
-
-        var provider = new ClassPathScanningCandidateComponentProvider(false);
-        provider.addIncludeFilter(new AnnotationTypeFilter(EntityBean.class));
-        provider.findCandidateComponents(Entity.class.getPackageName()).forEach(beanDefinition -> {
-            try {
-                var entityClass = Class.forName(beanDefinition.getBeanClassName());
-                jdbi.registerRowMapper(BeanMapper.factory(entityClass));
-                log.debug("registered entity bean {} as row mapper", entityClass.getSimpleName());
-            } catch (ClassNotFoundException e) {
-                throw new IllegalStateException("Could not load class", e);
-            }
-        });
-
         return jdbi;
     }
 }
